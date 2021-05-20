@@ -2,25 +2,25 @@
     "lakes": [
         {
             "GLS_ID": "HYLA00013962",
-            "RGN_0_FCT": "Deutschland",
-            "RGN_1_FCT": "Bayern",
-            "NM_FCT": "Amersee",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Amersee",
             "AREA_QTY": 47.1,
-            "MN_LAT_NM": 47.933,
-            "MX_LAT_NM": 48.077,
-            "MN_LON_NM": 11.093,
-            "MX_LON_NM": 11.176
+            "MN_LAT": 47.933,
+            "MX_LAT": 48.077,
+            "MN_LON": 11.093,
+            "MX_LON": 11.176
         },
         {
             "GLS_ID": "HYLA00013966",
-            "RGN_0_FCT": "Deutschland",
-            "RGN_1_FCT": "Bayern",
-            "NM_FCT": "Starnberger See",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Starnberger See",
             "AREA_QTY": 56.88,
-            "MN_LAT_NM": 47.818,
-            "MX_LAT_NM": 47.999,
-            "MN_LON_NM": 11.262,
-            "MX_LON_NM": 11.364
+            "MN_LAT": 47.818,
+            "MX_LAT": 47.999,
+            "MN_LON": 11.262,
+            "MX_LON": 11.364
         }
     ]
 }
