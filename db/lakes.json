@@ -21,6 +21,29 @@
             "MX_LAT": 47.999,
             "MN_LON": 11.262,
             "MX_LON": 11.364
+        },
+        {
+            "GLS_ID": "nan",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Ismaninger Speichersee",
+            "AREA_QTY": 5.8,
+            "MN_LAT": 48.203144,
+            "MX_LAT": 48.228379,
+            "MN_LON": 11.704855,
+            "MX_LON": 11.797714
+        },
+        {
+            "GLS_ID": "nan",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Großer Brombachsee",
+            "AREA_QTY": 9,
+            "MN_LAT": 49.12336,
+            "MX_LAT": 49.142601,
+            "MN_LON": 10.855891,
+            "MX_LON": 10.966738
         }
+
     ]
 }
