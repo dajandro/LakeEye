@@ -37,12 +37,23 @@
             "GLS_ID": "nan",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
-            "NAME": "Großer Brombachsee",
+            "NAME": "Walchensee",
+            "AREA_QTY": 16.4,
+            "MN_LAT": 47.568,
+            "MX_LAT": 47.618,
+            "MN_LON": 11.306,
+            "MX_LON": 11.393
+        },
+        {
+            "GLS_ID": "nan",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Waginger See",
             "AREA_QTY": 9,
-            "MN_LAT": 49.12336,
-            "MX_LAT": 49.142601,
-            "MN_LON": 10.855891,
-            "MX_LON": 10.966738
+            "MN_LAT": 47.919,
+            "MX_LAT": 47.953,
+            "MN_LON": 12.735,
+            "MX_LON": 12.807
         }
 
     ]
