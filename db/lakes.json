@@ -54,6 +54,50 @@
             "MX_LAT": 47.953,
             "MN_LON": 12.735,
             "MX_LON": 12.807
+        },
+        {
+            "GLS_ID": "GLWD00002317",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Chiemsee",
+            "AREA_QTY": 78.1,
+            "MN_LAT": 47.827,
+            "MX_LAT": 47.934,
+            "MN_LON": 12.347,
+            "MX_LON": 12.533
+        },
+        {
+            "GLS_ID": "GLWD00000352",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Bodensee",
+            "AREA_QTY": 476.15,
+            "MN_LAT": 47.476,
+            "MX_LAT": 47.835,
+            "MN_LON": 8.913,
+            "MX_LON": 9.799
+        },
+        {
+            "GLS_ID": "HYLA00013985",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Forggensee",
+            "AREA_QTY": 15.82,
+            "MN_LAT": 47.577,
+            "MX_LAT": 47.659,
+            "MN_LON": 10.703,
+            "MX_LON": 10.768
+        },
+        {
+            "GLS_ID": "HYLA00013985",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Forggensee",
+            "AREA_QTY": 15.82,
+            "MN_LAT": 47.577,
+            "MX_LAT": 47.659,
+            "MN_LON": 10.703,
+            "MX_LON": 10.768
         }
 
     ]
