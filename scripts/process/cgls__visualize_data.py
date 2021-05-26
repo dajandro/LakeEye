@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue May 11 15:39:45 2021
-
+Visualizing the distribution of the data and identifying outliers
 @author: da_or
 """
 
@@ -21,8 +21,12 @@ def outliers_modified_z_score(ys):
     threshold = 3.5
     median_y = np.median(ys)
     median_absolute_deviation_y = np.median([np.abs(y - median_y) for y in ys])
-    modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y
-                         for y in ys]
+    if median_absolute_deviation_y==0:
+        MAE=np.sum([abs(y-median_y) for y in ys])/len(ys)
+        modified_z_scores = [(y - median_y) / (1.253314*MAE) for y in ys]
+    else:
+        modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y for y in ys]
+    
     return np.where(np.abs(modified_z_scores) > threshold)
 
 def outliers_iqr(ys):
@@ -38,18 +42,18 @@ def outliers_iqr(ys):
 # Iterate files
 
 # Read file
-file = 'ftp_test_c_gls_LWQ300_202104210000_GLOBE_OLCI_V1.4.0.nc'
+#c_gls_LWQ300_202105110000_GLOBE_OLCI_V1.4.0.nc
+#c_gls_LWQ300_202105010000_GLOBE_OLCI_V1.4.0.nc
+file = input('Enter the file to be searched') # Make sure file is in directory
 ds = nc.Dataset(file)
 lats = ds['lat'][:]
 lons = ds['lon'][:]
 ts = ds['time'][:]
-
-
-# Chiemsee
-min_lat = 47.81
-max_lat = 47.94
-min_lon = 12.31
-max_lon = 12.55
+# Define lake of interest (Copy from json file)
+min_lat = float(input('Enter the minimum latitude of interest'))
+max_lat = float(input('Enter the maximum latitude of interest'))
+min_lon = float(input('Enter the minimum longitude of interest'))
+max_lon = float(input('Enter the maximum longitude of interest'))
 
 # Filter latitudes inside defined range
 lt = np.array(lats)
@@ -62,7 +66,7 @@ lg = np.array(lons)
 lg_index = np.argwhere((lg>=min_lon) & (lg<=max_lon))[:,0]
 
 # Filter measurement by lat & lon index
-measurement = 'turbidity_mean'
+measurement = 'trophic_state_index'
 t = ds[measurement][0,lt_index[0]:lt_index[len(lt_index)-1],lg_index[0]:lg_index[len(lg_index)-1]]
 ## Get index of cells without mask (non empty or valid)
 t_v = np.argwhere(t.mask==False)
@@ -80,21 +84,22 @@ else:
     df = pd.DataFrame(list(zip(lt_valid, lg_valid, m_valid)), columns=['Latitude', 'Longitude', measurement])
     
     # Statistics plot
-    fig, ax = plt.subplots()
+    fig,ax = plt.subplots()
     ax.hist(m_valid)
-    plt.figtext(0.75,0.7, df[measurement].describe().to_string())
-    plt.figtext(0.75,0.3, df[measurement].describe().loc[['mean','std']].to_string())
-    plt.show()
     
-    # Measurements plot
-    sc = plt.scatter(lg_valid, lt_valid, c=m_valid, cmap=plt.cm.get_cmap('winter'))
-    plt.colorbar(sc)
-    plt.show()
-    
+    #Measurements plot
+    fig,ax=plt.subplots()
+    a=ax.scatter(lg_valid, lt_valid, c=m_valid, cmap=plt.cm.get_cmap('winter'))
+    plt.colorbar(a)
+ 
+# Ztest
+
+
     mean_outliers=np.array(outliers_z_score(df[measurement]))
     median_outliers=np.array(outliers_modified_z_score(df[measurement]))
     iqr_outliers=np.array(outliers_iqr(df[measurement]))
-    # Visualising the outliers
+# Visualising the outliers
+# Create two subplots and unpack the output array immediately
     f, (ax1,ax2,ax3) = plt.subplots(1,3)
     ax1.hist(df[measurement])
     ax1.set_title('Mean Outliers')
@@ -109,4 +114,6 @@ else:
     for i in iqr_outliers:
         ax3.vlines(x=df[measurement][i],ymin=0,ymax=200, color='r', linewidth=2)
 
-    
+
+
+
