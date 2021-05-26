@@ -87,17 +87,6 @@
             "MX_LAT": 47.659,
             "MN_LON": 10.703,
             "MX_LON": 10.768
-        },
-        {
-            "GLS_ID": "HYLA00013985",
-            "RGN_0_NM": "Deutschland",
-            "RGN_1_NM": "Bayern",
-            "NAME": "Forggensee",
-            "AREA_QTY": 15.82,
-            "MN_LAT": 47.577,
-            "MX_LAT": 47.659,
-            "MN_LON": 10.703,
-            "MX_LON": 10.768
         }
 
     ]
