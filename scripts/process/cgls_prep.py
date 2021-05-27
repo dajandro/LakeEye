@@ -6,9 +6,8 @@ Created on Tue May 11 15:39:45 2021
 """
 
 import netCDF4 as nc
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
+import cgls_lib as lib
 
 # List files not yet processed
 
@@ -27,6 +26,18 @@ max_lat = 47.94
 min_lon = 12.31
 max_lon = 12.55
 
+# Amersee
+'''min_lat = 47.933
+max_lat = 48.077
+min_lon = 11.093
+max_lon = 11.176'''
+
+# Starnberger See
+'''min_lat = 47.818
+max_lat = 47.999
+min_lon = 11.262
+max_lon = 11.364'''
+
 # Filter latitudes inside defined range
 lt = np.array(lats)
 ## Get index
@@ -37,33 +48,23 @@ lg = np.array(lons)
 ## Get index
 lg_index = np.argwhere((lg>=min_lon) & (lg<=max_lon))[:,0]
 
-# Filter measurement by lat & lon index
-measurement = 'turbidity_mean'
-t = ds[measurement][0,lt_index[0]:lt_index[len(lt_index)-1],lg_index[0]:lg_index[len(lg_index)-1]]
-## Get index of cells without mask (non empty or valid)
-t_v = np.argwhere(t.mask==False)
-if (not len(t_v)):
-    print('No data available for the specified region')
-else:    
-    # Valid latitudes
-    lt_valid = lt[lt_index[t_v[:,0]]]
-    # Valid longitudes
-    lg_valid = lg[lg_index[t_v[:,1]]]
-    # Valid measurements
-    m_valid = t.data[t_v[:,0],t_v[:,1]]
-    
-    # Create dataframe
-    df = pd.DataFrame(list(zip(lt_valid, lg_valid, m_valid)), columns=['Latitude', 'Longitude', measurement])
-    
-    # Statistics plot
-    fig, ax = plt.subplots()
-    ax.hist(m_valid)
-    plt.figtext(0.75,0.7, df[measurement].describe().to_string())
-    plt.figtext(0.75,0.3, df[measurement].describe().loc[['mean','std']].to_string())
-    plt.show()
-    
-    # Measurements plot
-    sc = plt.scatter(lg_valid, lt_valid, c=m_valid, cmap=plt.cm.get_cmap('winter'))
-    plt.colorbar(sc)
-    plt.gca().set_aspect('equal')
-    plt.show()
+# List of desired variables
+measurements = ['trophic_state_index', 'num_obs', 'n_obs_quality_risk_sum', 'stats_valid_obs_tsi_sum']
+
+# Extract measurements of desired variables in specific region
+df = lib.get_measurements(ds, measurements, lt, lg, lt_index, lg_index)
+
+# Add clorophyll-a (upper limit)
+df['clorophyll-a'] = np.exp(((-((df['trophic_state_index']/10)-6)*np.log(2))-2.04)/-0.68)
+
+# Filter TSI with # of risky observations and # of observations used
+## risk_ratio = # risk obs / # obs used
+df['tsi_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_tsi_sum']
+df2 = df.query('tsi_risk_ratio<0.5')
+print(str(len(df)-len(df2))+" observations don't fulfill the TSI risk ratio")
+
+# Make plots
+## Histogram with statistics
+lib.plt_stats(df, 'trophic_state_index')
+## Scatter (map)
+lib.plt_scatter(df, 'trophic_state_index')
