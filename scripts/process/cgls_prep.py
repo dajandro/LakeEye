@@ -65,4 +65,5 @@ else:
     # Measurements plot
     sc = plt.scatter(lg_valid, lt_valid, c=m_valid, cmap=plt.cm.get_cmap('winter'))
     plt.colorbar(sc)
+    plt.gca().set_aspect('equal')
     plt.show()
