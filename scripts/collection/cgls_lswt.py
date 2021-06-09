@@ -10,9 +10,9 @@ import cgls_lib as lib
 
 # FTP server
 url = 'ftp.globalland.cls.fr'
-# Service path
-service_path = 'Core/BROCKMANN/dataset-brockmann-lswt-nrt/'
-# Service id
-service_id = 'cgls_lswt'
+# Product path
+product_path = 'Core/BROCKMANN/dataset-brockmann-lswt-nrt/'
+# Product id
+product_id = 'cgls_lswt'
 
-lib.fetch_file_ftp(url, 'usr', 'pwd', service_path, service_id)
+lib.fetch_file_ftp(url, 'usr', 'pwd', product_path, product_id)
