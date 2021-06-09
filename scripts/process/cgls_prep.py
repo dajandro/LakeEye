@@ -18,13 +18,13 @@ lakes = lib.get_lakes()
 products = ['cgls_lwq', 'cgls_lswt']
 
 # Define measurements
-measurements_lwq = ['trophic_state_index', 'num_obs', 'n_obs_quality_risk_sum', 'stats_valid_obs_tsi_sum']
-measurements_lswt = []
-
-df = pd.DataFrame()
+measurements_lwq = ['trophic_state_index', 'num_obs', 'n_obs_quality_risk_sum', 'stats_valid_obs_tsi_sum', 'turbidity_mean', 'turbidity_sigma', 'stats_valid_obs_turbidity_sum']
+measurements_lswt = ['lake_surface_water_temperature']
 
 # Process products for all lakes
 for i in range(len(products)):
+    df = pd.DataFrame()
+    
     p_i = products[i]
     print('Processing '+p_i)
     # Define measurements
@@ -55,9 +55,9 @@ for i in range(len(products)):
         # Append processed file to log
         lib.append_log(p_i, 'P', f_j)
         
-# Save file
-if(len(df)):
-    df.reset_index(drop=True, inplace=True)
-    df.to_json('../../data/' + date.today().strftime('%Y-%m-%d') + '.json')
+    # Save file
+    if(len(df)):
+        df.reset_index(drop=True, inplace=True)
+        df.to_json('../../data/' + p_i + '_' + date.today().strftime('%Y-%m-%d') + '.json')
     
         
