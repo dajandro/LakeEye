@@ -23,8 +23,6 @@ measurements_lswt = []
 
 df = pd.DataFrame()
 
-# Process for all 
-
 # Process products for all lakes
 for i in range(len(products)):
     p_i = products[i]
