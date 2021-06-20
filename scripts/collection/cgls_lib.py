@@ -12,13 +12,13 @@ from contextlib import closing
 from datetime import datetime
 
 def read_log(product, path='../../logs/'):
-    file = open(path + product + '.log', 'r')
+    file = open(path + product + '-D.log', 'r')
     entries = file.readlines()
     file.close()
     return entries
 
 def append_log(product, data, path='../../logs/'):
-    file = open(path + product + '.log', 'a')
+    file = open(path + product + '-D.log', 'a')
     file.write(f'\n{data}')
     file.close()
 
