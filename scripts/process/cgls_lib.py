@@ -130,8 +130,11 @@ def process_lake(product, lake, ds, measurements):
         # Filter TSI with # of risky observations and # of observations used
         ## risk_ratio = # risk obs / # obs used
         df['tsi_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_tsi_sum']
-        df2 = df.query('tsi_risk_ratio<0.5')
-        print(str(len(df)-len(df2))+" observations don't fulfill the TSI risk ratio")
+        df['tur_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_turbidity_sum']
+        df2 = df.query('tsi_risk_ratio<0.5')    
+        df2 = df2.query('~((tur_risk_ratio>0.5) | ( (tur_risk_ratio>=0.25) & (turbidity_sigma > 3.5)))')
+
+        print(str(len(df)-len(df2))+" observations don't fulfill the TSI and TUR risk ratio")
         return df2
     
     if(product=='cgls_lswt'):
