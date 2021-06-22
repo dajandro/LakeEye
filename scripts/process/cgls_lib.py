@@ -11,13 +11,13 @@ import json
 
 def read_log(product, log_type, path='../../logs/'):
     file = open(path + product + '-' + log_type + '.log', 'r')
-    entries = file.readlines()
+    entries = file.read().splitlines()
     file.close()
     return entries
 
 def append_log(product, log_type, data, path='../../logs/'):
     file = open(path + product + '-' + log_type + '.log', 'a')
-    file.write(f'\n{data}')
+    file.write(f'{data}\n')
     file.close()
     
 def get_lakes(path='../../db/lakes.json'):
@@ -78,8 +78,12 @@ def get_measurements(ds, m_names, lt, lg, lt_rgn_index, lg_rgn_index):
         df_m_i = get_measurement(ds, m_i, lt, lg, lt_rgn_index, lg_rgn_index)
         if (not len(df_m_i)):
             continue
+        # If still empty
+        if(not len(df)):
+            df = df_m_i
         # Merge with latitude and longitude
-        df = df.merge(df_m_i, how='inner', left_on=['Latitude', 'Longitude'], right_on=['Latitude', 'Longitude'])
+        else:                    
+            df = df.merge(df_m_i, how='inner', left_on=['Latitude', 'Longitude'], right_on=['Latitude', 'Longitude'])
     return df
         
 def process_lakes(product, lakes, ds, measurements):
@@ -122,20 +126,29 @@ def process_lake(product, lake, ds, measurements):
     if (not len(df)):
         return df
     
+    # If only num_obs available
+    if (set(df.columns) == set(['Latitude', 'Longitude', 'num_obs'])):
+        return df
+    
     # Special pre-process for each product
     if(product=='cgls_lwq'):
         # Add clorophyll-a (upper limit)
-        df['clorophyll-a'] = np.exp(((-((df['trophic_state_index']/10)-6)*np.log(2))-2.04)/-0.68)
+        if('trophic_state_index' in df):
+            df['clorophyll-a'] = np.exp(((-((df['trophic_state_index']/10)-6)*np.log(2))-2.04)/-0.68)
         
         # Filter TSI with # of risky observations and # of observations used
         ## risk_ratio = # risk obs / # obs used
-        df['tsi_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_tsi_sum']
-        df['tur_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_turbidity_sum']
-        df2 = df.query('tsi_risk_ratio<0.5')    
-        df2 = df2.query('~((tur_risk_ratio>0.5) | ( (tur_risk_ratio>=0.25) & (turbidity_sigma > 3.5)))')
-
-        print(str(len(df)-len(df2))+" observations don't fulfill the TSI and TUR risk ratio")
-        return df2
+        if(('n_obs_quality_risk_sum' in df) and ('stats_valid_obs_tsi_sum')):
+            df['tsi_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_tsi_sum']
+        if(('n_obs_quality_risk_sum' in df) and ('stats_valid_obs_turbidity_sum')):
+            df['tur_risk_ratio'] = df['n_obs_quality_risk_sum'] / df['stats_valid_obs_turbidity_sum']
+        if(('tsi_risk_ratio' in df) and ('tur_risk_ratio' in df) and ('turbidity_sigma' in df)):
+            df2 = df.query('tsi_risk_ratio<0.5')    
+            df2 = df2.query('~((tur_risk_ratio>0.5) | ( (tur_risk_ratio>=0.25) & (turbidity_sigma > 3.5)))')
+            print(str(len(df)-len(df2))+" observations don't fulfill the TSI and TUR risk ratio")
+            return df2
+        
+        return df
     
     if(product=='cgls_lswt'):
         return df
