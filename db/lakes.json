@@ -1,17 +1,19 @@
 {
     "lakes": [
         {
+            "ID": "DE_BY_001",
             "GLS_ID": "HYLA00013962",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
             "NAME": "Amersee",
-            "AREA_QTY": 47.1,
+            "AREA_QTY": 47.10,
             "MN_LAT": 47.933,
             "MX_LAT": 48.077,
             "MN_LON": 11.093,
             "MX_LON": 11.176
         },
         {
+            "ID": "DE_BY_002",
             "GLS_ID": "HYLA00013966",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
@@ -23,50 +25,55 @@
             "MX_LON": 11.364
         },
         {
-            "GLS_ID": "nan",
+            "ID": "DE_BY_003",
+            "GLS_ID": "",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
             "NAME": "Ismaninger Speichersee",
-            "AREA_QTY": 5.8,
-            "MN_LAT": 48.203144,
-            "MX_LAT": 48.228379,
-            "MN_LON": 11.704855,
-            "MX_LON": 11.797714
+            "AREA_QTY": 5.80,
+            "MN_LAT": 48.203,
+            "MX_LAT": 48.228,
+            "MN_LON": 11.704,
+            "MX_LON": 11.797
         },
         {
-            "GLS_ID": "nan",
+            "ID": "DE_BY_004",
+            "GLS_ID": "",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
             "NAME": "Walchensee",
-            "AREA_QTY": 16.4,
+            "AREA_QTY": 16.40,
             "MN_LAT": 47.568,
             "MX_LAT": 47.618,
             "MN_LON": 11.306,
             "MX_LON": 11.393
         },
         {
-            "GLS_ID": "nan",
+            "ID": "DE_BY_005",
+            "GLS_ID": "",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
             "NAME": "Waginger See",
-            "AREA_QTY": 9,
+            "AREA_QTY": 9.00,
             "MN_LAT": 47.919,
             "MX_LAT": 47.953,
             "MN_LON": 12.735,
             "MX_LON": 12.807
         },
         {
+            "ID": "DE_BY_006",
             "GLS_ID": "GLWD00002317",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
             "NAME": "Chiemsee",
-            "AREA_QTY": 78.1,
+            "AREA_QTY": 78.10,
             "MN_LAT": 47.827,
             "MX_LAT": 47.934,
             "MN_LON": 12.347,
             "MX_LON": 12.533
         },
         {
+            "ID": "DE_BY_007",
             "GLS_ID": "GLWD00000352",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
@@ -78,6 +85,7 @@
             "MX_LON": 9.799
         },
         {
+            "ID": "DE_BY_008",
             "GLS_ID": "HYLA00013985",
             "RGN_0_NM": "Deutschland",
             "RGN_1_NM": "Bayern",
@@ -87,6 +95,30 @@
             "MX_LAT": 47.659,
             "MN_LON": 10.703,
             "MX_LON": 10.768
+        },
+        {
+            "ID": "DE_BY_009",
+            "GLS_ID": "",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Rottachsee",
+            "AREA_QTY": 30.20,
+            "MN_LAT": 47.629,
+            "MX_LAT": 47.663,
+            "MN_LON": 10.361,
+            "MX_LON": 10.408
+        },
+        {
+            "ID": "DE_BY_010",
+            "GLS_ID": "",
+            "RGN_0_NM": "Deutschland",
+            "RGN_1_NM": "Bayern",
+            "NAME": "Grosser Brombachsee",
+            "AREA_QTY": 9.00,
+            "MN_LAT": 49.123,
+            "MX_LAT": 49.143,
+            "MN_LON": 10.856,
+            "MX_LON": 10.967
         }
     ]
 }
