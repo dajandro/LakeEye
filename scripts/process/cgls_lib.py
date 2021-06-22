@@ -86,7 +86,7 @@ def process_lakes(product, lakes, ds, measurements):
     df = pd.DataFrame()
     for i in range(len(lakes)):
         lake_i = lakes.iloc[[i]]
-        ID = lake_i.GLS_ID.values[0]
+        ID = lake_i.ID.values[0]
         name = lake_i.NAME.values[0]
         print('\t'+name)
         df_lake_i = process_lake(product, lake_i, ds, measurements)
