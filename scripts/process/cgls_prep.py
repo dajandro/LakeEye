@@ -55,6 +55,9 @@ for i in range(len(products)):
         # Append processed file to log
         lib.append_log(p_i, 'P', f_j)
         
+        # Close NC file
+        ds.close()
+        
     # Save file
     if(len(df)):
         df.reset_index(drop=True, inplace=True)
