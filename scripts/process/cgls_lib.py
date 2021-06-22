@@ -94,10 +94,11 @@ def process_lakes(product, lakes, ds, measurements):
         name = lake_i.NAME.values[0]
         print('\t'+name)
         df_lake_i = process_lake(product, lake_i, ds, measurements)
-        df_lake_i.insert(loc=0, column='NAME', value=name)
-        df_lake_i.insert(loc=0, column='ID', value=ID)
-        # Concatenate dataframes
-        df = df.append(df_lake_i)
+        if(len(df_lake_i)):
+            df_lake_i.insert(loc=0, column='NAME', value=name)
+            df_lake_i.insert(loc=0, column='ID', value=ID)
+            # Concatenate dataframes
+            df = df.append(df_lake_i)
         
     return df
 
@@ -124,11 +125,11 @@ def process_lake(product, lake, ds, measurements):
     df = get_measurements(ds, measurements, lt, lg, lt_index, lg_index)
     
     if (not len(df)):
-        return df
+        return pd.DataFrame()
     
     # If only num_obs available
     if (set(df.columns) == set(['Latitude', 'Longitude', 'num_obs'])):
-        return df
+        return pd.DataFrame()
     
     # Special pre-process for each product
     if(product=='cgls_lwq'):
