@@ -11,18 +11,18 @@ import urllib.request as request
 from contextlib import closing
 from datetime import datetime
 
-def read_log(service, path='../../logs/'):
-    file = open(path + service + '.log', 'r')
+def read_log(product, path='../../logs/'):
+    file = open(path + product + '-D.log', 'r')
     entries = file.readlines()
     file.close()
     return entries
 
-def append_log(service, data, path='../../logs/'):
-    file = open(path + service + '.log', 'a')
+def append_log(product, data, path='../../logs/'):
+    file = open(path + product + '-D.log', 'a')
     file.write(f'\n{data}')
     file.close()
 
-def fetch_file_ftp(server, usr, pwd, path, service):
+def fetch_file_ftp(server, usr, pwd, path, product):
     # Create FTP object
     ftp = ftplib.FTP()
     try:
@@ -41,18 +41,18 @@ def fetch_file_ftp(server, usr, pwd, path, service):
         
         print('\nMost recent file: ' + file_name + ', size: %.2f' % file_size + "MB")
             
-        # Validate in service log file
-        files = read_log(service)
+        # Validate in product log file
+        files = read_log(product)
         if (not file_name in files):            
             # Download file
             print('\nFile download - Start @ ' + datetime.today().strftime("%d/%m/%Y %H:%M:%S"))
             with closing(request.urlopen('ftp://'+usr+':'+pwd+'@'+server+'/'+path+file_name)) as r:
-                with open('ftp_test_'+file_name, 'wb') as f:
+                with open('../../data/' + file_name, 'wb') as f:
                     shutil.copyfileobj(r, f)
             print('\nFile download - End @ ' + datetime.today().strftime("%d/%m/%Y %H:%M:%S"))
             
-            # Update service log file
-            append_log(service, file_name)
+            # Update product log file
+            append_log(product, file_name)
         else:
             print('\nData up to date')
         
