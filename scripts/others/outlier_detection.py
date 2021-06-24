@@ -39,12 +39,11 @@ df=pd.read_json (r'cgls_lwq_2021-06-09.json')
 
 lakes=['Amersee','Starnberger See','Walchensee','Chiemsee','Bodensee','Forggensee']
 for lake in lakes:
-    lakename=df[df.NAME=='Amersee'];
+    lakename=df[df.NAME==lake];
     lake_TSI=lakename['trophic_state_index'];
     mean_outliers=np.array(outliers_z_score(lake_TSI))
     median_outliers=np.array(outliers_modified_z_score(lake_TSI))
     iqr_outliers=np.array(outliers_iqr(lake_TSI))
-    
 
 
     f, (ax1,ax2,ax3) = plt.subplots(1,3)
