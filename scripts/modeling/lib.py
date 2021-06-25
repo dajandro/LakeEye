@@ -9,6 +9,11 @@ import pandas as pd
 import numpy as np
 import math
 
+import matplotlib.pyplot as plt
+from sklearn.neighbors import NearestNeighbors
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pyplot
+
 def is_outlier_modZscore(values, threshold=3.5):
     median_y = np.median(values)
     median_absolute_deviation_y = np.median([np.abs(y - median_y) for y in values])
@@ -19,6 +24,40 @@ def is_outlier_modZscore(values, threshold=3.5):
         modified_z_scores = [0.6745 * (y - median_y) / median_absolute_deviation_y for y in values]
         
     return (np.abs(modified_z_scores) > threshold)
+
+def is_outlier_KNN(df, var, NN = 5, threshold=0.4):
+    
+    lat = np.vstack(df['Latitude'].values)
+    long = np.vstack(df['Longitude'].values)
+    turb = np.vstack(df[var].values)
+    
+    X = np.concatenate(([lat,long,turb]),axis=1)
+
+    # initiate the model
+    knnmodel = NearestNeighbors(n_neighbors = 5)
+    # fit the model
+    knnmodel.fit(X)
+    
+    # Distances and Indexes of k-neaighbors from model outputs
+    distances, indexes = knnmodel.kneighbors(X)
+    # plot mean of k-distances of each observation
+    # Do it in order to determine the treshhold/cutoff value
+    plt.plot(distances.mean(axis =1))
+    
+    # Determine the treshold value, in this case 0.4 works good
+    outlier_index = np.where(distances.mean(axis = 1) > 0.4)
+    outlier_values = df.iloc[outlier_index]
+    
+    # plot the figures: mainly for debugging and reporting purposes.
+    fig = pyplot.figure()
+    ax2 = Axes3D(fig)
+    # plot data
+    ax2.scatter(lat, long, turb , color = "b")
+    # plot outlier values
+    ax2.scatter(outlier_values["Latitude"], outlier_values["Longitude"], outlier_values['turbidity_mean'], color = "r")
+    pyplot.show()
+    
+    return (distances.mean(axis = 1) > 0.4)
 
 def get_ranks(dfQ, dfT):
     df = pd.DataFrame(columns=['LAKE_ID', 'DATE', 'TYPE', 'TSI', 'TURBIDITY', 'TEMPERATURE'])
@@ -51,7 +90,7 @@ def get_recent_representative_lwq(dfQ):
         # TSI
         tsi = dfQ[(dfQ.ID==lake) & (dfQ.DATE==date)]['trophic_state_index'].values
         tsi_w = 1-dfQ[(dfQ.ID==lake) & (dfQ.DATE==date)]['tsi_risk_ratio'].values
-        ## Remove outliers from trophic_state_index
+        ## Remove outliers
         tsi_o = is_outlier_modZscore(tsi)
         #print((np.count_nonzero(tsi_o)/len(tsi))*100)
         tsi = tsi[~ tsi_o]
@@ -68,6 +107,12 @@ def get_recent_representative_lwq(dfQ):
         # TURBIDITY
         tur = dfQ[(dfQ.ID==lake) & (dfQ.DATE==date)]['turbidity_mean'].values
         tur_w = 1-dfQ[(dfQ.ID==lake) & (dfQ.DATE==date)]['tur_risk_ratio'].values
+        ## Removel outliers
+        tur_o = is_outlier_KNN(dfQ[(dfQ.ID==lake) & (dfQ.DATE==date)], 'turbidity_mean')
+        #print((np.count_nonzero(tur_o)/len(tur))*100)
+        tur = tur[~ tur_o]
+        tur_w = tur_w[~ tur_o]
+        
         tur_avg = np.mean(tur)
         tur_med = np.median(tur)
         tur_wavg = np.sum(tur_w*tur)/np.sum(tur_w)
