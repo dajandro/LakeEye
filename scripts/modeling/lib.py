@@ -34,7 +34,7 @@ def is_outlier_KNN(df, var, NN = 5, threshold=0.4):
     X = np.concatenate(([lat,long,turb]),axis=1)
 
     # initiate the model
-    knnmodel = NearestNeighbors(n_neighbors = 5)
+    knnmodel = NearestNeighbors(n_neighbors = NN)
     # fit the model
     knnmodel.fit(X)
     
@@ -45,7 +45,7 @@ def is_outlier_KNN(df, var, NN = 5, threshold=0.4):
     plt.plot(distances.mean(axis =1))
     
     # Determine the treshold value, in this case 0.4 works good
-    outlier_index = np.where(distances.mean(axis = 1) > 0.4)
+    outlier_index = np.where(distances.mean(axis = 1) > threshold)
     outlier_values = df.iloc[outlier_index]
     
     # plot the figures: mainly for debugging and reporting purposes.
@@ -57,7 +57,7 @@ def is_outlier_KNN(df, var, NN = 5, threshold=0.4):
     ax2.scatter(outlier_values["Latitude"], outlier_values["Longitude"], outlier_values['turbidity_mean'], color = "r")
     pyplot.show()
     
-    return (distances.mean(axis = 1) > 0.4)
+    return (distances.mean(axis = 1) > threshold)
 
 def get_ranks(dfQ, dfT):
     df = pd.DataFrame(columns=['LAKE_ID', 'DATE', 'TYPE', 'TSI', 'TURBIDITY', 'TEMPERATURE'])
