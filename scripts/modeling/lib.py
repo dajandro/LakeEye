@@ -62,11 +62,14 @@ def is_outlier_KNN(df, var, NN = 5, threshold=0.4):
 def get_ranks(dfQ, dfT):
     df = pd.DataFrame(columns=['LAKE_ID', 'DATE', 'TYPE', 'TSI', 'TURBIDITY', 'TEMPERATURE'])
     
+    # Get most recent represenative values of Lake Water Quality for each lake
     df = get_recent_representative_lwq(dfQ)
+    # Get most recent represenative values of Lake Temperature for each lake
     df = get_recent_representative_lswt(dfT, df)
     
+    # Apply ranking functions
     df['RANK 1'] = df.apply(lambda x: rank1(x.TSI), axis=1)
-    df['RANK 2'] = df.apply(lambda x: rank2(x.TURBIDITY, x.TEMPERATURE), axis=1)
+    df['RANK 2'] = df.apply(lambda x: rank2(x.TURBIDITY, x.TEMPERATURE, a=0.3, b=0.7), axis=1)
     
     return df
     
@@ -96,8 +99,11 @@ def get_recent_representative_lwq(dfQ):
         tsi = tsi[~ tsi_o]
         tsi_w = tsi_w[~ tsi_o]
         
+        ## Average model
         tsi_avg = np.mean(tsi)
+        ## Median model
         tsi_med = np.median(tsi)
+        ## Weighted average model - using risk ratio
         tsi_wavg = np.sum(tsi_w*tsi)/np.sum(tsi_w)
         print('\tTSI')
         print('\t\t Avg: '+str(tsi_avg))
@@ -113,14 +119,18 @@ def get_recent_representative_lwq(dfQ):
         tur = tur[~ tur_o]
         tur_w = tur_w[~ tur_o]
         
+        ## Average model
         tur_avg = np.mean(tur)
+        ## Median model
         tur_med = np.median(tur)
+        ## Weighted average model - using risk ratio
         tur_wavg = np.sum(tur_w*tur)/np.sum(tur_w)
         print('\tTURBIDITY')
         print('\t\t Avg: '+str(tur_avg))
         print('\t\t Median: '+str(tur_med))
         print('\t\t Weighted Avg: '+str(tur_wavg))
-            
+        
+        # Append modeled values to dataframe
         df_i = pd.DataFrame()
         df_i['LAKE_ID'] = [lake]
         df_i['DATE'] = [date]
@@ -162,6 +172,7 @@ def get_recent_representative_lswt(dfT, df):
         print('\tTEMPERATURE')
         print('\t\t Avg: '+str(tem[0]))
         
+        ## Add to dataframe
         df.loc[df.LAKE_ID==lake, 'TEMPERATURE']=[tem]
     
     return df
@@ -169,6 +180,7 @@ def get_recent_representative_lswt(dfT, df):
 def rank1(TSI):
     if (math.isnan(TSI)):
         return math.nan
+    TSI = int(TSI)
     if (TSI <= 10):
         return 1
     if (TSI <= 30):
@@ -185,18 +197,18 @@ def rank2(TUR, TEMP, a=0.5, b=0.5):
     # TUR rank
     TUR_r = math.nan
     if (not math.isnan(TUR)):
-        if (TUR <= 10.0):
+        if (TUR <= 1.0):
             TUR_r = 1
-        elif (TUR > 10.0 and TUR <= 30.0):
+        elif (TUR > 1.0 and TUR <= 5.0):
             TUR_r = 2
-        elif (TUR > 30.0 and TUR <= 50.0):
+        elif (TUR > 5.0 and TUR <= 20.0):
             TUR_r = 3
-        elif (TUR > 50.0 and TUR <= 70.0):
+        elif (TUR > 20.0 and TUR <= 50.0):
             TUR_r = 4
         else:
             TUR_r = 5
     
-    # TEMP rank
+    # TEMPERATURE rank
     TEMP_r = math.nan
     if (not math.isnan(TEMP)):
         if (TEMP >= 20):
@@ -210,10 +222,13 @@ def rank2(TUR, TEMP, a=0.5, b=0.5):
         else:
             TEMP_r = 5
     
+    # If not TUR data available
     if (math.isnan(TUR)):
         return TEMP_r
     
+    # If not TEMPERATURE data available
     if (math.isnan(TEMP)):
         return TUR_r
     
-    return TUR_r*a + TEMP_r*b
+    # If both TUR and TEMPERATURE available, return weighted averge rank
+    return math.ceil((TUR_r*a + TEMP_r*b)/2)

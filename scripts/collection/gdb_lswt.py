@@ -49,8 +49,7 @@ for i in range(len(lake_url)):
         df_i = pd.read_html(url)[1]
     
     # Rename columns
-    df_i.columns = ['MEASUREMENT_DATE', 'TEMP_AVG', 'TEMP_MAX', 'TEMP_MIN']
-        
+    df_i.columns = ['MEASUREMENT_DATE', 'TEMP_AVG', 'TEMP_MAX', 'TEMP_MIN']       
     
     # Add ID
     df_i.insert(loc=0, column='LAKE_ID', value=l_i)
