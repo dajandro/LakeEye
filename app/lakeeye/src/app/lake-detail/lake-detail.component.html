@@ -1,0 +1,32 @@
+<div class="bg-light">
+    <div class="panel panel-primary" style="margin-top: 20px">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ info.NAME }}</h3>
+        </div>
+        <div class="panel-body">
+            <p>Area: {{ info.AREA_QTY }} m^2</p>
+            <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">●</span>●
+                </span>
+            </ng-template>
+            <div>
+                Rank 1: <ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r1"></ngb-rating>
+            </div>
+            <br>
+            Rank 2: <ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r2"></ngb-rating>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <google-map [zoom]="11" [center]="{lat: lat_center, lng: lon_center}">
+            <map-marker
+                *ngFor="let marker of markers"
+                [position]="marker.position"
+                [label]="marker.label"
+                [title]="marker.title"
+                [options]="marker.options"
+                >
+            </map-marker>
+        </google-map>
+    </div>
+</div>

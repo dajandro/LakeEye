@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { HelpComponent } from './help/help.component';
 import { ApiService } from './api.service';
 import { LakesListComponent } from './lakes-list/lakes-list.component';
+import { LakeDetailComponent } from './lake-detail/lake-detail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -19,13 +22,16 @@ import { LakesListComponent } from './lakes-list/lakes-list.component';
     FooterComponent,
     HomeComponent,
     HelpComponent,
-    LakesListComponent
+    LakesListComponent,
+    LakeDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    NgbModule,
+    GoogleMapsModule
   ],
   providers: [
     ApiService

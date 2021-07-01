@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 export class LakesListComponent implements OnInit, OnDestroy {
 
   lakes: any;
-
+  
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
@@ -25,7 +25,7 @@ export class LakesListComponent implements OnInit, OnDestroy {
     this.apiService.getLakesRank().subscribe(data => {
       this.lakes = data;
       this.dtTrigger.next();
-    })
+    });
   }
 
   ngOnDestroy(): void{

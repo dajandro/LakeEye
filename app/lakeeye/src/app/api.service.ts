@@ -13,4 +13,16 @@ export class ApiService {
   getLakesRank(){
     return this.http.get(`${this.apiURL}/lakesRank`);
   }
+
+  getLakeInfo(id: string){
+    return this.http.get(`${this.apiURL}/lakes/${id}`);
+  }
+
+  getLakeRank(idL:string, idR:number){
+    return this.http.get(`${this.apiURL}/lakes/${idL}/rank/${idR}`);
+  }
+
+  getLakeParam(idL:string, idP:number){
+    return this.http.get(`${this.apiURL}/lakes/${idL}/parameter/${idP}`);
+  }
 }

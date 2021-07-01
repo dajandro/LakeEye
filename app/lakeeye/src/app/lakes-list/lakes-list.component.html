@@ -8,7 +8,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let lake of lakes">
-            <td><a href="/lake?id={{ lake.LAKE_ID }}">{{ lake.NAME }}</a></td>            
+            <td><a href="/lake/{{ lake.LAKE_ID }}">{{ lake.NAME }}</a></td>            
             <td>{{ lake.RANK1 }}</td>
             <td>{{ lake.RANK2 }}</td>
         </tr>
