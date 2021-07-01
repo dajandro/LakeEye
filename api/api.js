@@ -44,6 +44,13 @@ router.route('/lakes/:idL/parameter/:idP').get((request, response)=>{
     })
 })
 
+router.route('/lakesRank').get((request, response)=>{
+    dboperations.getLastLakesRank().then(result => {
+        //console.log(result);
+        response.json(result[0]);
+    })
+})
+
 router.route('/lakes/:idL/rank/:idR').get((request, response)=>{
     dboperations.getLastLakeRank(request.params.idL, request.params.idR).then(result => {
         //console.log(result);

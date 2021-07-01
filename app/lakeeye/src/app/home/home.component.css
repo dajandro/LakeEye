@@ -1,0 +1,7 @@
+.jumbotron {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.9) 100%), url('../../assets/imgs/lake.jpg') no-repeat center center; 
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
