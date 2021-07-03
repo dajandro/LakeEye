@@ -17,16 +17,32 @@
             Rank 2: <ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r2"></ngb-rating>
         </div>
     </div>
-    <div style="display: flex; justify-content: center;">
-        <google-map [zoom]="11" [center]="{lat: lat_center, lng: lon_center}">
-            <map-marker
-                *ngFor="let marker of markers"
-                [position]="marker.position"
-                [label]="marker.label"
-                [title]="marker.title"
-                [options]="marker.options"
-                >
-            </map-marker>
-        </google-map>
-    </div>
+    <div>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 34%;">
+                        <div style="display: flex; justify-content: center;">
+                            <google-map [zoom]="11" [center]="{lat: lat_center, lng: lon_center}">
+                                <map-marker
+                                    *ngFor="let marker of markers"
+                                    [position]="marker.position"
+                                    [label]="marker.label"
+                                    [title]="marker.title"
+                                    [options]="marker.options"
+                                    >
+                                </map-marker>
+                            </google-map>
+                        </div>
+                    </td>
+                    <td style="width: 33%;">
+                        <app-chart [idL]="lakeID" [idM]="1" style="display:flex; justify-content:center"></app-chart>
+                    </td>
+                    <td style="width: 33%;">
+                            <app-chart [idL]="lakeID" [idM]="2" style="display:flex; justify-content:center;"></app-chart>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
 </div>

@@ -25,4 +25,8 @@ export class ApiService {
   getLakeParam(idL:string, idP:number){
     return this.http.get(`${this.apiURL}/lakes/${idL}/parameter/${idP}`);
   }
+
+  getLakeMeasurements(idL: string, idM: number){
+    return this.http.get(`${this.apiURL}/lakes/${idL}/measurement/${idM}`);
+  }
 }

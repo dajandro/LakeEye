@@ -14,6 +14,16 @@ import { LakesListComponent } from './lakes-list/lakes-list.component';
 import { LakeDetailComponent } from './lake-detail/lake-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { ChartComponent } from './chart/chart.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+
+//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+//import  * as PlotlyJS from '@types/plotly.js';
+//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+//import * as PlotlyJS from "plotly.js";
+//import { PlotlyModule } from 'angular-plotly.js';
+//PlotlyModule.plotlyjs = PlotlyJS;
+
 
 @NgModule({
   declarations: [
@@ -23,7 +33,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     HomeComponent,
     HelpComponent,
     LakesListComponent,
-    LakeDetailComponent
+    LakeDetailComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +42,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
     HttpClientModule,
     DataTablesModule,
     NgbModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    GoogleChartsModule
+    //PlotlyModule
   ],
   providers: [
     ApiService

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 
@@ -11,8 +11,8 @@ import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 })
 export class LakeDetailComponent implements OnInit {
 
-  @Input('id') lakeID: any = ""; 
-  
+  @Input('id') lakeID: any = "";
+
   info: any;
   r1: number = 0;
   r2: number = 0;
@@ -28,6 +28,7 @@ export class LakeDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private apiService: ApiService) { }
 
   ngOnInit(): void {
+
     this.lakeID = this.route.snapshot.paramMap.get('id');
 
     // Get Lake Information
@@ -126,7 +127,6 @@ export class LakeDetailComponent implements OnInit {
       }
       this.markers.push(marker);
     })
-
   }
 
 }
