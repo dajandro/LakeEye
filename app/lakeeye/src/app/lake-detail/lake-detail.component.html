@@ -10,11 +10,9 @@
                     <span class="half" [style.width.%]="fill">●</span>●
                 </span>
             </ng-template>
-            <div>
-                Rank 1: <ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r1"></ngb-rating>
-            </div>
+            <span title="(1)Low...(3)Moderate...(5)High">Rank 1 (Health risk):</span><ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r1"></ngb-rating>
             <br>
-            Rank 2: <ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r2"></ngb-rating>
+            <span title="(1)Best...(3)Moderate...(5)Bad">Rank 2 (Suitability for water activities):</span><ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r2"></ngb-rating>
         </div>
     </div>
     <div>

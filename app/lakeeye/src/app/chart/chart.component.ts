@@ -56,8 +56,9 @@ export class ChartComponent implements OnInit {
 
       console.log(this.dataG);
 
-      var cS = chroma.scale(['yellow', 'lightgreen', '008ae5'])
-        .domain([Math.min(...vals), Math.max(...vals)]);
+      var cS = chroma.scale(['008ae5', 'lightgreen', 'yellow'])
+        //.domain([Math.min(...vals), Math.max(...vals)]);
+        .domain([0, 100]);
         
       for(var i = 0; i<vals.length; i++){
         cols.push(cS(i).hex());
@@ -76,7 +77,8 @@ export class ChartComponent implements OnInit {
           colors: cols,
           sizeAxis: {minValue:0, maxValue:1},
           width: 500,
-          height: 500
+          height: 500,
+          backgroundColor: '#f8f9fa'
         }
       }
     });   

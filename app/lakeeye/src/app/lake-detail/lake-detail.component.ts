@@ -62,7 +62,7 @@ export class LakeDetailComponent implements OnInit {
       // Create Marker
       var marker = {
         position: {
-          lat: this.lat_center  + 0.02,
+          lat: this.lat_center + 0.01,
           lng: this.lon_center
         },
         label: {
@@ -86,11 +86,11 @@ export class LakeDetailComponent implements OnInit {
       // Create Marker
       var marker = {
         position: {
-          lat: this.lat_center,
-          lng: this.lon_center
+          lat: this.lat_center - 0.01,
+          lng: this.lon_center - 0.04
         },
         label: {
-          color: 'red',
+          color: 'black',
           text: 'TUR: ' + tur.toFixed(2),
           fontSize: '20px'
         },
@@ -113,8 +113,8 @@ export class LakeDetailComponent implements OnInit {
       // Create Marker
       var marker = {
         position: {
-          lat: this.lat_center - 0.02,
-          lng: this.lon_center
+          lat: this.lat_center - 0.01,
+          lng: this.lon_center + 0.04
         },
         label: {
           color: 'green',
