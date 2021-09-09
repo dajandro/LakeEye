@@ -1,0 +1,46 @@
+<div class="bg-light">
+    <div class="panel panel-primary" style="margin-top: 20px">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ info.NAME }}</h3>
+        </div>
+        <div class="panel-body">
+            <p>Area: {{ info.AREA_QTY }} km^2</p>
+            <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">●</span>●
+                </span>
+            </ng-template>
+            <span title="(1)Low...(3)Moderate...(5)High">Rank 1 (Health risk):</span><ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r1"></ngb-rating>
+            <br>
+            <span title="(1)Best...(3)Moderate...(5)Bad">Rank 2 (Suitability for water activities):</span><ngb-rating [readonly]="true" [max]=5 [starTemplate]="t" [rate]="r2"></ngb-rating>
+        </div>
+    </div>
+    <div>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 34%;">
+                        <div style="display: flex; justify-content: center;">
+                            <google-map [zoom]="11" [center]="{lat: lat_center, lng: lon_center}">
+                                <map-marker
+                                    *ngFor="let marker of markers"
+                                    [position]="marker.position"
+                                    [label]="marker.label"
+                                    [title]="marker.title"
+                                    [options]="marker.options"
+                                    >
+                                </map-marker>
+                            </google-map>
+                        </div>
+                    </td>
+                    <td style="width: 33%;">
+                        <app-chart [idL]="lakeID" [idM]="1" style="display:flex; justify-content:center"></app-chart>
+                    </td>
+                    <td style="width: 33%;">
+                            <app-chart [idL]="lakeID" [idM]="2" style="display:flex; justify-content:center;"></app-chart>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
+</div>
